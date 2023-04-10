@@ -3,6 +3,7 @@ package com.khalid.springdatajpa.controller;
 import com.khalid.springdatajpa.entity.Employee;
 import com.khalid.springdatajpa.service.EmployeeService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,5 +38,15 @@ public class EmployeeController {
     @GetMapping("/employee/getByDesignation")
     public Employee getEmployeeByDesignationDesc(@PathVariable String designation) {
         return employeeService.findEmployeeByDesignationByOrder(designation);
+    }
+
+    @RequestMapping(value = "/pagingAndSortingEmployee/{pageNumber}/{pageSize}", method =RequestMethod.GET )
+    public Page<Employee> employeePaging(@PathVariable Integer pageNumber, @PathVariable Integer pageSize) {
+        return employeeService.employeePagingAndSorting(pageNumber,pageSize, null);
+    }
+
+    @RequestMapping(value = "/pagingAndSortingEmployee/{pageNumber}/{pageSize}/{sortProperty}", method =RequestMethod.GET )
+    public Page<Employee> employeePaging(@PathVariable Integer pageNumber, @PathVariable Integer pageSize, @PathVariable String sortProperty ) {
+        return employeeService.employeePagingAndSorting(pageNumber,pageSize,sortProperty);
     }
 }

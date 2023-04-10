@@ -3,6 +3,10 @@ package com.khalid.springdatajpa.service;
 import com.khalid.springdatajpa.entity.Employee;
 import com.khalid.springdatajpa.repo.EmployeeRepo;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,5 +35,18 @@ public class EmployeeService {
 
     public Employee findEmployeeByDesignationByOrder(String designation) {
         return employeeRepo.findTopByDesignationOrderBySalaryDesc(designation);
+    }
+
+    public Page<Employee> employeePagingAndSorting(Integer pageNumber, Integer pageSize, String sortProperty) {
+        /*// sorting
+        Sort sort = Sort.by(Sort.Direction.ASC, "name");
+        Pageable pageable = PageRequest.of(pageNumber,pageSize,sort);*/
+        Pageable pageable = null;
+        if (sortProperty!=null) {
+            pageable = PageRequest.of(pageNumber,pageSize, Sort.Direction.ASC, sortProperty);
+        } else {
+            pageable = PageRequest.of(pageNumber,pageSize, Sort.Direction.ASC, "name");
+        }
+        return employeeRepo.findAll(pageable);
     }
 }
