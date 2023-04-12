@@ -49,4 +49,13 @@ public class EmployeeService {
         }
         return employeeRepo.findAll(pageable);
     }
+
+    public List<Employee> getAllEmployeesByQuery() {
+       return employeeRepo.getAllEmployeesQuery();
+    }
+
+
+    public List<Employee> getAllEmplByPhoneAndDes(Long phoneNumber, List<String> designationList) {
+        return employeeRepo.getAllEmployeeByPhoneNumberAndDesignation(phoneNumber,designationList);
+    }
 }

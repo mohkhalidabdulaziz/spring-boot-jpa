@@ -49,4 +49,15 @@ public class EmployeeController {
     public Page<Employee> employeePaging(@PathVariable Integer pageNumber, @PathVariable Integer pageSize, @PathVariable String sortProperty ) {
         return employeeService.employeePagingAndSorting(pageNumber,pageSize,sortProperty);
     }
+
+    @GetMapping("/getAllEmployees")
+    public List<Employee> getAllEmployees() {
+        return employeeService.getAllEmployeesByQuery();
+    }
+
+    @GetMapping("/findAllEmployeeWithPhoneAndDesig/{phoneNumber}/{designationList}")
+    public List<Employee> findAllEmployeeWithPhoneAndDesig(@PathVariable Long phoneNumber,
+                                                           @PathVariable List<String> designationList) {
+        return employeeService.getAllEmplByPhoneAndDes(phoneNumber,designationList);
+    }
 }
